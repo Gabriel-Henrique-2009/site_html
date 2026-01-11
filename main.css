@@ -1,0 +1,122 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --header: #d6d6d6;
+    --texto-principal: #433e3e;
+    --background-pagina: #ffffff;
+    --cor-fundo-tema: #ffffff;
+}
+
+body.modo-escuro {
+    --header: #1a1a1a;
+    --texto-principal: #f0f0f0;
+    --background-pagina: #121212;
+    --cor-fundo-tema: #333333;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--background-pagina);
+    color: var(--texto-principal);
+    transition: background-color 0.3s ease;
+}
+
+body a {
+    text-decoration: none;
+    color: var(--texto-principal);
+}
+
+nav ul {
+    position: sticky;
+    display: flex;
+    width: 100%;
+    background-color: var(--header);
+    justify-content: space-between;
+    padding: 1.8rem 3rem;
+    z-index: 1000;
+}
+
+nav ul div {
+    display: flex;
+    gap: 2rem;
+}
+
+nav #config {
+    position: relative;
+    cursor: pointer;
+}
+
+nav #config img {
+    width: 1.5rem;
+}
+
+body.dark-mode #config img {
+    filter: invert(1);
+}
+
+nav #config:hover ul {
+    display: flex;
+}
+
+nav #config ul {
+    display: none;
+    width: max-content;
+    position: absolute;
+    right: 0;
+    background-color: var(--cor-fundo-tema);
+    padding: 0.41rem 0;
+    border-radius: 2.5rem;
+    box-shadow: 0 0.21rem 0.4rem rgba(0, 0, 0, 0.15);
+    top: 100%;
+}
+
+nav #config ul li#tema {
+    padding: 0.41rem 2rem;
+    color: var(--texto-principal);
+}
+
+nav li {
+    list-style-type: none;
+}
+
+main {
+    padding-top: 5rem;
+}
+
+main section.fora {
+    display: flex;
+    justify-content: center;
+    gap: 3.5rem;
+    padding: 6rem 4rem;
+}
+
+main section.fora .sansungnorm img {
+    width: 18rem;
+}
+
+main section.fora .sansungfe img {
+    width: 30rem;
+}
+
+main section.fora .iphone figure img {
+    width: 25rem;
+    padding-top: 1rem;
+}
+
+main section.cards {
+    display: flex;
+    flex-flow: column;
+    gap: 1.8rem;
+}
+
+main div {
+    border-left: 0.5rem solid var(--header);
+}
+
+main p {
+    width: 30rem;
+}

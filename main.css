@@ -1,3 +1,4 @@
+/* GERAL */
 * {
     padding: 0;
     margin: 0;
@@ -22,7 +23,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: var(--background-pagina);
     color: var(--texto-principal);
-    transition: background-color 0.3s ease;
+    transition: background 0.3s ease;
 }
 
 body a {
@@ -30,14 +31,20 @@ body a {
     color: var(--texto-principal);
 }
 
+/* HEADER */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
 nav ul {
-    position: sticky;
     display: flex;
     width: 100%;
     background-color: var(--header);
     justify-content: space-between;
     padding: 1.8rem 3rem;
-    z-index: 1000;
 }
 
 nav ul div {
@@ -54,7 +61,7 @@ nav #config img {
     width: 1.5rem;
 }
 
-body.dark-mode #config img {
+body.modo-escuro #config img {
     filter: invert(1);
 }
 
@@ -64,59 +71,73 @@ nav #config:hover ul {
 
 nav #config ul {
     display: none;
+    flex-direction: column;
     width: max-content;
     position: absolute;
     right: 0;
     background-color: var(--cor-fundo-tema);
     padding: 0.41rem 0;
-    border-radius: 2.5rem;
-    box-shadow: 0 0.21rem 0.4rem rgba(0, 0, 0, 0.15);
+    border-radius: 1rem;
+    box-shadow: 0 0.21rem 0.4rem rgba(0,0,0,0.15);
     top: 100%;
 }
 
 nav #config ul li#tema {
-    padding: 0.41rem 2rem;
+    padding: 0.8rem 2rem;
     color: var(--texto-principal);
+    white-space: nowrap;
 }
 
 nav li {
     list-style-type: none;
 }
 
+/* CONTEÚDO PRINCIPAL */
 main {
-    padding-top: 5rem;
+    padding-top: 7rem;
+    min-height: 100vh;
 }
 
+.container-padrao {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+/* ESTILO PARA CARDS (COMPARATIVO) */
 main section.fora {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 3.5rem;
-    padding: 6rem 4rem;
-}
-
-main section.fora .sansungnorm img {
-    width: 18rem;
-}
-
-main section.fora .sansungfe img {
-    width: 30rem;
-}
-
-main section.fora .iphone figure img {
-    width: 25rem;
-    padding-top: 1rem;
+    padding: 4rem 2rem;
 }
 
 main section.cards {
     display: flex;
     flex-flow: column;
     gap: 1.8rem;
+    align-items: center;
 }
 
-main div {
+main section.cards img {
+    max-width: 250px;
+}
+
+main div.divisor {
     border-left: 0.5rem solid var(--header);
+    height: 300px;
 }
 
 main p {
-    width: 30rem;
+    max-width: 30rem;
+    line-height: 1.5;
+}
+
+footer {
+    padding: 2rem;
+    text-align: center;
+    background-color: var(--header);
+    margin-top: 2rem;
 }

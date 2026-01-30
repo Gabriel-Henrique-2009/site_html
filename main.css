@@ -5,6 +5,10 @@
     box-sizing: border-box;
 }
 
+html{
+    font-size: 62.5%;
+}
+
 :root {
     --header: #d6d6d6;
     --texto-principal: #433e3e;
@@ -69,7 +73,12 @@ body.modo-escuro #config img {
 }
 
 nav #config:hover ul {
+    width: 13rem;
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 nav #config ul {
@@ -86,21 +95,17 @@ nav #config ul {
 }
 
 nav #config ul li#tema {
-    padding: 0.8rem 2rem;
     color: var(--texto-principal);
     white-space: nowrap;
 }
 
-nav li{
+nav a, nav li{
     list-style-type: none;
-}
-
-nav a{
     display: inline-block;
-    transition: all 0.1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.1s ease-in;
 }
 
-nav a:hover {
+nav a:hover, nav li:hover {
     color: var(--texto-hover);
     transform: scale(1.1);
 }
@@ -110,6 +115,9 @@ main {
     justify-content: center;
     padding-top: 7rem;
     min-height: 100vh;
+    &#coluna{
+        flex-direction: column;
+    }
 }
 
 .main_comparacao {
@@ -122,9 +130,20 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-flow: column wrap;
+    gap: 2.5rem;
+    flex-flow: column;
     padding: 2rem;
-    text-align: center; 
+    text-align: center;
+
+    & img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        &:hover{
+            transform: scale(1.15);
+        }
+    }
 }
 
 
@@ -138,18 +157,19 @@ main section.fora {
 }
 
 main section.cards img {
-    max-width: 250px;
+    max-width: 25rem;
 }
 
 .cards{
     position: relative;
-    width: 300px;  /* Largura original da imagem */
-    height: 400px; /* Altura original da imagem */
+    width: 30rem;
+    height: 40rem;
     cursor: pointer;
 
     &.iphone{
         padding-top: 1rem;
     }
+
     & img {
         width: 100%;
         height: 100%;
@@ -169,12 +189,10 @@ main section.cards img {
         top: 70%;
         left: 50%;
         transform: translateX(-50%) translateY(20px); /* Centralizado e um pouco abaixo */
-        width: 90%;
-         
+        width: 90%;         
         }
     
         & img {
-        /* A imagem cresce sem alterar o tamanho do .card (sem empurrar vizinhos) */
         transform: scale(1.15); 
         }
     }
@@ -195,4 +213,22 @@ footer {
     text-align: center;
     background-color: var(--header);
     margin-top: 2rem;
+}
+
+.login{
+    & img{
+        width: 20rem;
+    }
+}
+
+#sansung-logo {
+    width: 15rem;
+}
+
+#apple-logo {
+    width: 10rem;
+}
+
+#iphone-diferentinho{
+    width: 30rem;
 }

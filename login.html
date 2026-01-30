@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cell Phone - Marcas</title>
+    <title>Cell Phone - Início</title>
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
@@ -16,7 +16,7 @@
                     <li><a href="marcas.html">MARCAS</a></li>
                     <li><a href="opinioes.html">OPINIÕES</a></li>
                     <li id="config">
-                        <img src="https://cdn-icons-png.flaticon.com/512/18/18432.png" alt="">
+                        <img src="https://cdn-icons-png.flaticon.com/512/18/18432.png" alt="Configurações">
                         <ul>
                             <li id="tema">tema - escuro</li>
                             <li><a href="login.html">Login</a></li>
@@ -27,20 +27,23 @@
         </nav>
     </header>
     
-    <main class="container-padrao">
+    <main id="coluna">
         <div class="container-padrao">
-            <h2>Marcas em Destaque</h2>
+            <h1>Bem-vindo ao Cell Phone</h1>
+            <p>Sua fonte principal para comparar os lançamentos de 2025. Explore as especificações e descubra qual o melhor smartphone para você.</p>
+            <img id="iphone-diferentinho" src="iphone-17-pro-max.png">
         </div>
-        <section class="fora">
-            <section class="cards">
-                <img id="sansung-logo" src="Samsung_Orig_Wordmark_BLACK_RGB.png">
-                <p>Líder em inovação de telas e câmeras com a linha Galaxy S25.</p>
-            </section>
-            <div class="divisor"></div>
-            <section class="cards">
-                <img id="apple-logo" src="Apple_logo_black.svg">
-                <p>Referência em ecossistema e performance com o novo iPhone 17.</p>
-            </section>
+
+        <section class="login">
+            <img src="mockup_iphon.png" 
+            alt="">
+            <form class="inscricoes" action="inicio.html">
+                <label for="nome">Nome:</label>
+                <input type="name" id="nome"> <br>            
+                <label for="email">E-mail:</label>
+                <input type="email" id="email"> <br>
+                <input type="submit" value="Enter">
+            </form>
         </section>
     </main>
 

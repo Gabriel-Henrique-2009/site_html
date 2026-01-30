@@ -92,7 +92,7 @@ nav li {
     list-style-type: none;
 }
 
-/* CONTEÚDO PRINCIPAL */
+/*MAIN*/
 main {
     padding-top: 7rem;
     min-height: 100vh;
@@ -105,7 +105,7 @@ main {
     text-align: center;
 }
 
-/* ESTILO PARA CARDS (COMPARATIVO) */
+/*CARD*/
 main section.fora {
     display: flex;
     justify-content: center;
@@ -114,11 +114,18 @@ main section.fora {
     padding: 4rem 2rem;
 }
 
-main section.cards {
+main section.cards:last-child{
+    display: none;
+    transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0.1s;
+}
+
+main section.cards:hover {
+    transform: scale(1.2, 1.2);
     display: flex;
     flex-flow: column;
     gap: 1.8rem;
     align-items: center;
+
 }
 
 main section.cards img {

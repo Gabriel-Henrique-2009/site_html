@@ -105,15 +105,11 @@ nav a, nav li{
     transition: all 0.1s ease-in;
 }
 
-<<<<<<< HEAD
 nav a:hover, nav li:hover {
     color: var(--texto-hover);
     transform: scale(1.1);
 }
 /* CONTEÚDO PRINCIPAL */
-=======
-/*MAIN*/
->>>>>>> 6dee0dada18769d2d218b167306e958c0a2bc94d
 main {
     display: flex;
     justify-content: center;
@@ -127,7 +123,11 @@ main {
 .main_comparacao {
     flex-flow: column; 
     align-items: center;
-    padding: 2rem 0;
+    gap: 2rem;
+
+    & :last-child{
+        padding-bottom: 8rem;
+    }
 }
 
 .container-padrao {
@@ -150,12 +150,8 @@ main {
     }
 }
 
-<<<<<<< HEAD
 
 /* ESTILO PARA CARDS (COMPARATIVO) */
-=======
-/*CARD*/
->>>>>>> 6dee0dada18769d2d218b167306e958c0a2bc94d
 main section.fora {
     display: flex;
     justify-content: center;
@@ -164,23 +160,8 @@ main section.fora {
     padding: 4rem 2rem;
 }
 
-<<<<<<< HEAD
 main section.cards img {
     max-width: 25rem;
-=======
-main section.cards:last-child{
-    display: none;
-    transition: transform 0.5s cubic-bezier(0.075, 0.82, 0.165, 1) 0.1s;
-}
-
-main section.cards:hover {
-    transform: scale(1.2, 1.2);
-    display: flex;
-    flex-flow: column;
-    gap: 1.8rem;
-    align-items: center;
-
->>>>>>> 6dee0dada18769d2d218b167306e958c0a2bc94d
 }
 
 .cards{
@@ -223,7 +204,7 @@ main section.cards:hover {
 
 main div.divisor {
     border-left: 0.5rem solid var(--header);
-    height: 300px;
+    height: 30rem;
 }
 
 main p {
@@ -235,7 +216,7 @@ footer {
     padding: 2rem;
     text-align: center;
     background-color: var(--header);
-    margin-top: 2rem;
+    margin-top: 2.5rem;
 }
 
 .login{

@@ -114,20 +114,21 @@ main {
     display: flex;
     justify-content: center;
     padding-top: 7rem;
-    min-height: 100vh;
-    &#coluna{
-        flex-direction: column;
-    }
+    min-height: 100vh;    
+}
+
+main#coluna{
+    flex-direction: column;
 }
 
 .main_comparacao {
     flex-flow: column; 
     align-items: center;
     gap: 2rem;
+}
 
-    & :last-child{
-        padding-bottom: 8rem;
-    }
+.main_comparacao :last-child{
+    padding-bottom: 8rem;
 }
 
 .container-padrao {
@@ -138,18 +139,18 @@ main {
     flex-flow: column;
     padding: 2rem;
     text-align: center;
-
-    & img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-        &:hover{
-            transform: scale(1.15);
-        }
-    }
+}
+ 
+.container-padrao img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+.container-padrao img:hover {
+    transform: scale(1.15);
+}
 
 /* ESTILO PARA CARDS (COMPARATIVO) */
 main section.fora {
@@ -169,38 +170,37 @@ main section.cards img {
     width: 30rem;
     height: 40rem;
     cursor: pointer;
-
-    &.iphone{
-        padding-top: 1rem;
-    }
-
-    & img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    }
-    
-    & div{
-        display: none;
-    }    
-
-    &:hover {
-        & div{
-        display: block;
-        position: absolute;
-        bottom: 20px;
-        top: 70%;
-        left: 50%;
-        transform: translateX(-50%) translateY(20px); /* Centralizado e um pouco abaixo */
-        width: 90%;         
-        }
-    
-        & img {
-        transform: scale(1.15); 
-        }
-    }
 }
+
+.iphone figure img{
+    padding-top: 1rem;
+}
+
+.cards figure img, .cards img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+    
+.cards div{
+    display: none;
+}    
+
+.cards:hover div{
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    top: 70%;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    width: 90%;         
+}
+    
+.cards:hover figure img {
+    transform: scale(1.15); 
+}
+    
 
 main div.divisor {
     border-left: 0.5rem solid var(--header);
@@ -220,9 +220,15 @@ footer {
 }
 
 .login{
-    & img{
-        width: 20rem;
-    }
+    background-image: url();
+    background-repeat: no-repeat;
+    height: 80rem; /* You must set a specified height */
+    background-size: 80rem;
+    background-position: right; /* Center the image */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #sansung-logo {

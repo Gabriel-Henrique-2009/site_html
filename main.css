@@ -219,16 +219,74 @@ footer {
     margin-top: 2.5rem;
 }
 
-.login{
-    background-image: url();
+
+.div-login{
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    background-image: url(image-removebg-preview.png);
     background-repeat: no-repeat;
-    height: 80rem; /* You must set a specified height */
-    background-size: 80rem;
-    background-position: right; /* Center the image */
+    height: 63rem;
+    background-size: 30rem;
+    background-position: top 13rem left 20rem;
+}
+
+.login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    max-width: 35rem;
+    padding: 3rem;
+    margin: 0 20rem 0 0;
+    background-color: var(--background-pagina-);
+    border-radius: 1.2rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.login label {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: var(--texto-principal);
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+.login input[type="email"],
+.login input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    transition: border-color 0.3s ease-in 0.1s;
+}
+
+.login input[type="email"]:focus,
+.login input[type="password"]:focus {
+    border-color: #2A2F42;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+}
+
+.login input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #2A2F42;
+    color: #f0f0f0;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in;
+}
+
+.login input[type="submit"]:hover {
+    background-color: #222836;
+}
+
+.login input[type="submit"]:active {
+    transform: scale(0.98);
 }
 
 #sansung-logo {

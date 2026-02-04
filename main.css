@@ -300,3 +300,20 @@ footer {
 #iphone-diferentinho{
     width: 30rem;
 }
+
+#comentarios{
+    display: flex;
+    gap: 1.5rem;
+    flex-direction: column;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+th, td{
+    border: 1.5px solid var(--texto-principal);
+    border-spacing: 0;
+    color: var(--texto-principal);
+    padding: 1.5rem;
+}

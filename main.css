@@ -224,7 +224,7 @@ footer {
     display: flex;
     align-items: center;
     justify-content: right;
-    background-image: url(image-removebg-preview.png);
+    background-image: url(imagem/image-removebg-preview.png);
     background-repeat: no-repeat;
     height: 63rem;
     background-size: 30rem;
@@ -278,7 +278,7 @@ footer {
     border-radius: 6px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease-in;
+    transition: all 0.3s ease-in 0s;
 }
 
 .login input[type="submit"]:hover {

@@ -30,8 +30,8 @@ const phones = [
         <PhoneCard v-bind="phone" />
       </template>
     </section>
-    <footer>
-      <p>2026 Cell Phone - ligue para um de nossos colaboradores!</p>
-    </footer>
   </main>
+  <footer>
+    <p>2026 Cell Phone - ligue para um de nossos colaboradores!</p>
+  </footer>
 </template>

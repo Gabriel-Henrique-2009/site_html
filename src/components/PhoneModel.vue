@@ -41,6 +41,10 @@ const ajuste = computed(() =>
   typeof props.modelo === 'object' && props.modelo ? props.modelo.ajuste || {} : {}
 );
 
+const materiais = computed(() =>
+  typeof props.modelo === 'object' && props.modelo ? props.modelo.materiais || {} : {}
+);
+
 let THREE = null;
 let renderer = null;
 let cena = null;
@@ -88,6 +92,215 @@ function redimensionar() {
   desenhar();
 }
 
+
+function papelDeParede(visual) {
+  const largura = 512;
+  const altura = 1024;
+  const tela = document.createElement('canvas');
+  tela.width = largura;
+  tela.height = altura;
+  const contexto = tela.getContext('2d');
+
+  const base = contexto.createLinearGradient(0, 0, largura, altura);
+  base.addColorStop(0, visual.tela1 || '#101a33');
+  base.addColorStop(0.52, visual.tela2 || '#2f6fd0');
+  base.addColorStop(1, visual.tela3 || '#05070d');
+  contexto.fillStyle = base;
+  contexto.fillRect(0, 0, largura, altura);
+
+  const brilhos = [
+    [0.78, 0.26, 0.62, visual.aura1 || '#7f9bff', 0.5],
+    [0.2, 0.74, 0.7, visual.aura2 || '#b06bff', 0.5],
+    [0.62, 0.52, 0.5, visual.aura1 || '#7f9bff', 0.28],
+  ];
+  contexto.globalCompositeOperation = 'lighter';
+  brilhos.forEach(([x, y, raio, cor, alfa]) => {
+    const gradiente = contexto.createRadialGradient(
+      x * largura,
+      y * altura,
+      0,
+      x * largura,
+      y * altura,
+      raio * largura
+    );
+    gradiente.addColorStop(0, cor);
+    gradiente.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    contexto.globalAlpha = alfa;
+    contexto.fillStyle = gradiente;
+    contexto.fillRect(0, 0, largura, altura);
+  });
+
+  const textura = new THREE.CanvasTexture(tela);
+  textura.colorSpace = THREE.SRGBColorSpace;
+  textura.anisotropy = 4;
+  return textura;
+}
+
+function aplicarPintura(material, cor, tipo) {
+  if (!material) {
+    return;
+  }
+
+  // Remove texturas originais (vermelho, floral, wallpapers aleatórios) para
+  // que a cor sólida da paleta apareça de forma limpa.
+  if ('map' in material) {
+    material.map = null;
+  }
+  if ('emissiveMap' in material) {
+    material.emissiveMap = null;
+  }
+  if (material.color) {
+    material.color.set(cor);
+  }
+  if (material.emissive) {
+    material.emissive.set(0x000000);
+  }
+
+  if (tipo === 'metal') {
+    if ('metalness' in material) material.metalness = 0.9;
+    if ('roughness' in material) material.roughness = 0.3;
+    if ('envMapIntensity' in material) material.envMapIntensity = 1.55;
+  } else if (tipo === 'escuro') {
+    if ('metalness' in material) material.metalness = 0.5;
+    if ('roughness' in material) material.roughness = 0.42;
+    if ('envMapIntensity' in material) material.envMapIntensity = 1.1;
+  } else {
+    if ('metalness' in material) material.metalness = 0.25;
+    if ('roughness' in material) material.roughness = 0.6;
+    if ('envMapIntensity' in material) material.envMapIntensity = 0.95;
+  }
+
+  material.needsUpdate = true;
+}
+
+// Recolore as partes do GLB conforme `materiais` (modelos3d.js). Telas
+// nativas (iPhone Max, Xiaomi, Pixel, Edge) já funcionam e não recebem
+// wallpaper — apenas telas quebradas (S25, iPhone 17 Pro) usam `telaExtra`.
+function estilizar(objeto) {
+  const visual = props.visual || {};
+  const config = materiais.value || {};
+  const lista = (chave) => (Array.isArray(config[chave]) ? config[chave] : []);
+
+  const corpo = lista('corpo');
+  const metal = lista('metal');
+  const escuro = lista('escuro');
+  const telas = lista('tela');
+  const telasMalhas = lista('telaMalhas');
+  const ocultar = lista('ocultar');
+
+  // Wallpaper só para telas quebradas (config.telaExtra true)
+  const precisaTelaExtra = !!config.telaExtra;
+  const temTelaNativa = telas.length > 0 || telasMalhas.length > 0;
+
+  const textura = precisaTelaExtra && temTelaNativa ? papelDeParede(visual) : null;
+  let materialTela = null;
+  if (textura) {
+    materialTela = new THREE.MeshBasicMaterial({
+      map: textura,
+      toneMapped: false,
+      side: THREE.DoubleSide,
+    });
+    materialTela.name = '__tela__';
+  }
+
+  let materialTelaExtra = null;
+  if (materialTela && precisaTelaExtra) {
+    const texturaExtra = papelDeParede(visual);
+    materialTelaExtra = materialTela.clone();
+    materialTelaExtra.name = '__tela_extra__';
+    materialTelaExtra.side = THREE.FrontSide;
+    materialTelaExtra.transparent = true;
+    materialTelaExtra.alphaTest = 0.5;
+    materialTelaExtra.map = texturaExtra;
+    materialTelaExtra.needsUpdate = true;
+  }
+
+  const cache = new Map();
+  const descartar = new Set();
+
+  const pintar = (material, cor, tipo) => {
+    const chave = `${material.uuid}|${tipo}`;
+    if (cache.has(chave)) {
+      return cache.get(chave);
+    }
+    const copia = material.clone();
+    copia.name = material.name;
+    aplicarPintura(copia, cor, tipo);
+    cache.set(chave, copia);
+    descartar.add(material);
+    return copia;
+  };
+
+  objeto.traverse((no) => {
+    if (!no.isMesh) {
+      return;
+    }
+
+    if (ocultar.includes(no.name)) {
+      no.visible = false;
+      return;
+    }
+
+    const originais = Array.isArray(no.material) ? no.material : [no.material];
+    let esconder = false;
+
+    const aplicados = originais.map((material) => {
+      if (!material) {
+        return material;
+      }
+
+      const nome = material.name || '';
+
+      if (ocultar.includes(nome)) {
+        esconder = true;
+        return material;
+      }
+
+      // Telas nativas: aplica wallpaper só se for telaExtra (tela quebrada).
+      // Senão, deixa o material original da tela (já funciona).
+      if (materialTela && (telas.includes(nome) || telasMalhas.includes(no.name))) {
+        return materialTela;
+      }
+
+      if (corpo.includes(nome)) {
+        return pintar(material, visual.corpo || '#c2cbd9', 'corpo');
+      }
+      if (metal.includes(nome)) {
+        return pintar(material, visual.escuro || '#6f7b90', 'metal');
+      }
+      if (escuro.includes(nome)) {
+        return pintar(material, visual.escuro || '#6f7b90', 'escuro');
+      }
+
+      return material;
+    });
+
+    if (esconder) {
+      no.visible = false;
+      return;
+    }
+
+    no.material = Array.isArray(no.material) ? aplicados : aplicados[0];
+  });
+
+  // Libera apenas materiais originais que realmente saíram de uso.
+  const emUso = new Set();
+  objeto.traverse((no) => {
+    if (!no.isMesh) {
+      return;
+    }
+    const usados = Array.isArray(no.material) ? no.material : [no.material];
+    usados.forEach((material) => material && emUso.add(material));
+  });
+  descartar.forEach((material) => {
+    if (!emUso.has(material)) {
+      material.dispose?.();
+    }
+  });
+
+  return { materialTela, materialTelaExtra };
+}
+
 function limpar() {
   observador?.disconnect();
   observador = null;
@@ -115,7 +328,6 @@ function limpar() {
   }
 
   renderer?.dispose();
-  renderer?.forceContextLoss?.();
   renderer = null;
   cena = null;
   camera = null;
@@ -208,6 +420,8 @@ async function iniciar() {
         alvos.forEach((no) => no.parent?.remove(no));
       }
 
+      const { materialTelaExtra } = estilizar(objeto);
+
       // O glTF pode trazer uma rotação própria na cena. O invólucro aplica a
       // rotação base no objeto e serve de referência para enquadrar/escalar.
       const involucro = new THREE.Group();
@@ -229,27 +443,23 @@ async function iniciar() {
       const maior = Math.max(tamanho.x, tamanho.y, tamanho.z) || 1;
       const escala = 2.55 / maior;
 
+      // Telas quebradas (S25, iPhone 17 Pro): malha nativa não renderiza.
+      // Plano sobreposto com wallpaper cobre a frente do aparelho.
+      if (materiais.value.telaExtra && materialTelaExtra) {
+        const geometriaTela = new THREE.PlaneGeometry(tamanho.x * 0.9, tamanho.y * 0.93);
+        const frente = new THREE.Mesh(geometriaTela, materialTelaExtra);
+        frente.name = '__tela_extra__';
+        frente.position.set(centro.x, centro.y, caixa.max.z + maior * 0.006);
+        involucro.add(frente);
+      }
+
       involucro.scale.multiplyScalar(escala);
       involucro.position.copy(centro).multiplyScalar(-escala);
 
-      objeto.traverse((no) => {
-        if (no.isMesh && no.material) {
-          no.material.envMapIntensity = 1.15;
-        }
-      });
-
       grupo.add(involucro);
-      grupo.updateMatrixWorld(true);
-      const caixaMundo = new THREE.Box3().setFromObject(involucro);
-      window.__phoneDebug = {
-        giro,
-        objRot: objeto.rotation.toArray(),
-        escala,
-        invPos: involucro.position.toArray(),
-        worldSize: caixaMundo.getSize(new THREE.Vector3()).toArray(),
-      };
       aplicarGiro();
       redimensionar();
+
       pronto.value = true;
     },
     undefined,

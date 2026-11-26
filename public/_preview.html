@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body { margin: 0; background: #eef2f7; font-family: system-ui; }
+      .linha { display: flex; gap: 8px; padding: 8px; }
+      .caixa { flex: 1; background: #fff; border-radius: 12px; height: 520px; position: relative; }
+      .caixa span { position: absolute; top: 6px; left: 10px; font-size: 12px; color: #64748b; z-index: 2; }
+      canvas { width: 100%; height: 100%; display: block; }
+      #info { padding: 4px 10px; font: 12px monospace; color: #334155; white-space: pre; }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://esm.sh/three@0.187.0",
+          "three/addons/": "https://esm.sh/three@0.187.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="linha">
+      <div class="caixa"><span>frente (giro 0)</span><canvas id="a"></canvas></div>
+      <div class="caixa"><span>costas (giro 180)</span><canvas id="b"></canvas></div>
+    </div>
+    <div id="info"></div>
+    <script type="module">
+      import * as THREE from 'three';
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+      import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+      const modelo = new URLSearchParams(location.search).get('m');
+      const alvos = [
+        { id: 'a', giro: 0, cam: [0, 0, 5.4] },
+        { id: 'b', giro: Math.PI, cam: [0, 0, 5.4] },
+      ];
+      const info = [];
+
+      const gltf = await new Promise((ok, erro) =>
+        new GLTFLoader().load('/modelos/' + modelo + '.glb', ok, undefined, erro)
+      );
+
+      for (const alvo of alvos) {
+        const canvas = document.getElementById(alvo.id);
+        const w = canvas.clientWidth, h = canvas.clientHeight;
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        renderer.setPixelRatio(1.5);
+        renderer.setSize(w, h, false);
+        renderer.setClearColor(0x000000, 0);
+        renderer.outputColorSpace = THREE.SRGBColorSpace;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
+
+        const cena = new THREE.Scene();
+        const pm = new THREE.PMREMGenerator(renderer);
+        cena.environment = pm.fromScene(new RoomEnvironment(), 0.04).texture;
+        cena.add(new THREE.HemisphereLight(0xffffff, 0x3b4050, 1.1));
+        const d = new THREE.DirectionalLight(0xffffff, 2.4); d.position.set(3, 5, 4); cena.add(d);
+        const d2 = new THREE.DirectionalLight(0x9db8ff, 1.2); d2.position.set(-4, 2, -3); cena.add(d2);
+
+        const obj = gltf.scene.clone(true);
+        const caixa = new THREE.Box3().setFromObject(obj);
+        const tam = caixa.getSize(new THREE.Vector3());
+        const centro = caixa.getCenter(new THREE.Vector3());
+        const escala = 2.55 / Math.max(tam.x, tam.y, tam.z);
+        obj.scale.setScalar(escala);
+        obj.position.copy(centro).multiplyScalar(-escala);
+        const grupo = new THREE.Group();
+        grupo.add(obj);
+        grupo.rotation.y = alvo.giro;
+        cena.add(grupo);
+
+        const cam = new THREE.PerspectiveCamera(34, w / h, 0.1, 100);
+        cam.position.set(...alvo.cam);
+        renderer.render(cena, cam);
+        if (alvo.id === 'a') info.push(`tam=${tam.x.toFixed(2)}x${tam.y.toFixed(2)}x${tam.z.toFixed(2)}`);
+      }
+      document.getElementById('info').textContent = modelo + '  ' + info.join(' ');
+      document.title = 'ok';
+    </script>
+  </body>
+</html>

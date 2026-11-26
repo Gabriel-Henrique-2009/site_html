@@ -11,6 +11,10 @@ html {
 
 :root {
     --header: #d6d6d6;
+    --header-fundo: #ffffff;
+    --header-borda: #ececec;
+    --pill-fundo: #f1f1f1;
+    --pill-borda: #d9d9d9;
     --texto-principal: #433e3e;
     --texto-hover: #656161;
     --background-pagina: #ffffff;
@@ -19,8 +23,12 @@ html {
 
 body.modo-escuro {
     --header: #1a1a1a;
+    --header-fundo: #1a1a1a;
+    --header-borda: #2c2c2c;
+    --pill-fundo: #2f2f2f;
+    --pill-borda: #4a4a4a;
     --texto-principal: #f0f0f0;
-    --texto-hover: #656161;
+    --texto-hover: #a8a8a8;
     --background-pagina: #121212;
     --cor-fundo-tema: #333333;
 }
@@ -44,94 +52,151 @@ header {
     top: 0;
     width: 100%;
     z-index: 1000;
+    background-color: var(--header-fundo);
+    border-bottom: 0.1rem solid var(--header-borda);
 }
 
-nav > ul {
-    display: flex;
+header nav {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
     width: 100%;
-    background-color: var(--header);
-    justify-content: space-between;
-    padding: 1.8rem 3rem;
+    padding: 1.3rem clamp(1.5rem, 8.5vw, 16rem);
 }
 
-nav .nav-links {
-    display: flex;
-    gap: 2rem;
-}
-
-nav #config {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-nav #config button {
+header .logo {
     display: flex;
     align-items: center;
+    gap: 1.2rem;
+    justify-self: start;
+    font-size: 2.4rem;
+    font-weight: 700;
+    transition: transform 0.1s ease-in;
+}
+
+header .logo img {
+    width: 1.8rem;
+    height: auto;
+}
+
+body.modo-escuro header .logo img {
+    filter: invert(1);
+}
+
+header .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    justify-self: center;
+}
+
+header .nav-links li {
+    list-style-type: none;
+}
+
+header .nav-links a {
+    display: block;
+    padding: 0.9rem 2.2rem;
+    border-radius: 999rem;
+    font-size: 1.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 0.1s ease-in, color 0.1s ease-in;
+}
+
+header .nav-links a:hover {
+    color: var(--texto-hover);
+    background-color: var(--pill-fundo);
+}
+
+header .nav-links a.router-link-exact-active {
+    background-color: var(--pill-fundo);
+    color: var(--texto-principal);
+}
+
+header .nav-acoes {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    justify-self: end;
+}
+
+header .botao-sugestao {
+    padding: 0.9rem 2.5rem;
+    border: 0.2rem solid var(--pill-borda);
+    border-radius: 999rem;
+    font-size: 1.6rem;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background-color 0.1s ease-in;
+}
+
+header .botao-sugestao:hover {
+    background-color: var(--pill-fundo);
+}
+
+header #config {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+header #config > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4.2rem;
+    height: 4.2rem;
     border: 0;
-    padding: 0;
-    background: transparent;
+    border-radius: 50%;
+    background-color: var(--pill-fundo);
     color: inherit;
     font: inherit;
     cursor: pointer;
 }
 
-nav #config img {
-    width: 1.5rem;
+header #config img {
+    width: 2.2rem;
 }
 
-body.modo-escuro #config img {
+body.modo-escuro header #config img {
     filter: invert(1);
 }
 
-nav #config:hover ul,
-nav #config:focus-within ul {
-    width: 13rem;
+header #config:hover ul,
+header #config:focus-within ul {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 0.5rem;
 }
 
-nav #config > ul {
+header #config > ul {
     display: none;
-    flex-direction: column;
-    width: max-content;
     position: absolute;
     right: 0;
+    top: calc(100% + 0.8rem);
+    min-width: 13rem;
+    padding: 0.8rem;
     background-color: var(--cor-fundo-tema);
-    padding: 0.41rem 0;
     border-radius: 1rem;
     box-shadow: 0 0.21rem 0.4rem rgba(0, 0, 0, 0.15);
-    top: 100%;
 }
 
-nav #config ul #tema {
+header #config ul #tema {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 0;
+    border-radius: 0.6rem;
+    background-color: transparent;
     color: var(--texto-principal);
+    font: inherit;
+    font-size: 1.3rem;
     white-space: nowrap;
+    cursor: pointer;
 }
 
-nav a,
-nav li {
-    list-style-type: none;
-    display: inline-block;
-    transition: all 0.1s ease-in;
-}
-
-nav a:hover,
-nav li:hover {
-    color: var(--texto-hover);
-    transform: scale(1.1);
-}
-
-nav li.nav-links:hover {
-    transform: none;
-}
-
-nav #config:hover {
-    color: var(--texto-hover);
-    transform: scale(1.1);
+header #config ul #tema:hover {
+    background-color: var(--pill-fundo);
 }
 
 /* CONTEÚDO PRINCIPAL */
@@ -174,6 +239,64 @@ main#coluna {
 }
 
 .container-padrao img:hover {
+    transform: scale(1.15);
+}
+
+/* PÁGINA DE INÍCIO */
+main.inicio {
+    display: block;
+}
+
+.inicio-secao {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(4rem, 9vw, 16rem);
+    width: 100%;
+    max-width: 150rem;
+    min-height: 70rem;
+    margin: 0 auto;
+    padding: 8rem 4rem;
+}
+
+.inicio-texto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 62rem;
+    text-align: center;
+}
+
+.inicio-texto h1 {
+    font-size: clamp(2.8rem, 2.2vw, 4rem);
+    font-weight: 700;
+}
+
+.inicio-texto p {
+    max-width: 62rem;
+    font-size: clamp(1.8rem, 1.6vw, 2.9rem);
+    line-height: 1.4;
+}
+
+.inicio-imagem-link {
+    display: flex;
+    flex-shrink: 0;
+    width: min(62rem, 100%);
+}
+
+.inicio-imagem-link.grande {
+    width: min(74rem, 100%);
+}
+
+.inicio-imagem {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.inicio-imagem-link:hover .inicio-imagem {
     transform: scale(1.15);
 }
 
@@ -443,6 +566,33 @@ td {
     border-width: 1px;
 }
 
+@media (max-width: 1100px) {
+    header nav {
+        padding: 1.3rem 2.5rem;
+    }
+
+    header .nav-links a {
+        padding: 0.8rem 1.4rem;
+        font-size: 1.4rem;
+    }
+
+    header .botao-sugestao {
+        padding: 0.8rem 1.8rem;
+    }
+
+    .inicio-secao {
+        gap: 5rem;
+    }
+
+    .inicio-imagem-link {
+        width: min(48rem, 100%);
+    }
+
+    .inicio-imagem-link.grande {
+        width: min(56rem, 100%);
+    }
+}
+
 @media (max-width: 900px) {
     .div-login {
         justify-content: center;
@@ -454,15 +604,75 @@ td {
         align-self: flex-end;
         margin: 0 1.5rem 3rem;
     }
+
+    header nav {
+        grid-template-columns: auto 1fr auto;
+        gap: 1.5rem;
+    }
+
+    header .nav-links {
+        justify-self: stretch;
+        justify-content: flex-start;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    header .nav-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    .inicio-secao {
+        flex-direction: column;
+        min-height: auto;
+        gap: 4rem;
+        padding: 6rem 2.5rem;
+    }
+
+    .inicio-imagem-link,
+    .inicio-imagem-link.grande {
+        width: min(48rem, 100%);
+    }
+
+    .inicio-texto p {
+        font-size: 2rem;
+    }
 }
 
 @media (max-width: 700px) {
-    nav > ul {
-        padding: 1.8rem 1.5rem;
+    header nav {
+        padding: 1.2rem 1.5rem;
+        gap: 1rem;
     }
 
-    nav .nav-links {
-        gap: 1rem;
+    header .logo {
+        gap: 0.8rem;
+        font-size: 1.7rem;
+    }
+
+    header .logo img {
+        width: 1.5rem;
+    }
+
+    header .nav-links a {
+        padding: 0.7rem 1.1rem;
+        font-size: 1.25rem;
+    }
+
+    header .botao-sugestao {
+        display: none;
+    }
+
+    header #config > button {
+        width: 3.6rem;
+        height: 3.6rem;
+    }
+
+    header #config img {
+        width: 1.9rem;
+    }
+
+    main {
+        padding-top: 6rem;
     }
 
     .fora {
@@ -483,15 +693,19 @@ td {
         font-size: 1.4rem;
     }
 
-    nav > ul {
-        padding: 1.5rem 1rem;
+    header nav {
+        padding: 1.1rem 1rem;
     }
 
-    nav .nav-links {
-        gap: 0.7rem;
+    header .logo {
+        font-size: 1.5rem;
     }
 
-    nav .nav-links a {
-        font-size: 1.15rem;
+    header .nav-links a {
+        font-size: 1.2rem;
+    }
+
+    .inicio-secao {
+        padding: 4rem 1.5rem;
     }
 }

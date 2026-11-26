@@ -141,14 +141,8 @@ function aplicarPintura(material, cor, tipo) {
     return;
   }
 
-  // Remove texturas originais (vermelho, floral, wallpapers aleatórios) para
-  // que a cor sólida da paleta apareça de forma limpa.
-  if ('map' in material) {
-    material.map = null;
-  }
-  if ('emissiveMap' in material) {
-    material.emissiveMap = null;
-  }
+  // Mantém as texturas originais do GLB para preservar a qualidade visual.
+  // Apenas ajusta a cor base e as propriedades de material.
   if (material.color) {
     material.color.set(cor);
   }
@@ -233,6 +227,14 @@ function estilizar(objeto) {
 
   objeto.traverse((no) => {
     if (!no.isMesh) {
+      return;
+    }
+
+    // Malhas sem material (ex.: cópias vazias do S25 e do iPhone 17 Pro) são
+    // desenhadas pelo Three.js com o material branco padrão, gerando manchas
+    // e z-fighting por cima das peças reais. Esconde-as.
+    if (!no.material || (Array.isArray(no.material) && no.material.every((m) => !m))) {
+      no.visible = false;
       return;
     }
 

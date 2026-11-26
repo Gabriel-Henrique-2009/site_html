@@ -1,5 +1,5 @@
 /* =========================================================
-   BASE
+   BASEe
    ========================================================= */
 * {
     padding: 0;
@@ -84,44 +84,7 @@ header nav {
     padding: 1.3rem clamp(1.5rem, 8.5vw, 16rem);
 }
 
-<<<<<<< HEAD
 header .logo {
-=======
-nav .nav-links {
-    display: flex;
-    gap: 2rem;
-}
-
-nav a,
-nav li {
-    list-style-type: none;
-    display: inline-block;
-    transition: all 0.1s ease-in;
-}
-
-nav a:hover,
-nav li:hover {
-    color: var(--texto-hover);
-    transform: scale(1.1);
-}
-
-nav li.nav-links:hover {
-    transform: none;
-}
-
-nav #config {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-}
-
-nav #config:hover {
-    color: var(--texto-hover);
-    transform: scale(1.1);
-}
-
-nav #config button {
->>>>>>> 56e5115dd27b61f0c9ccd877fdc633142759cdfd
     display: flex;
     align-items: center;
     gap: 1.2rem;
@@ -132,7 +95,7 @@ nav #config button {
 }
 
 header .logo img {
-    width: 1.8rem;
+    width: 2.5em;
     height: auto;
 }
 
@@ -220,7 +183,6 @@ body.modo-escuro header #config img {
     filter: invert(1);
 }
 
-<<<<<<< HEAD
 header #config:hover ul,
 header #config:focus-within ul {
     display: flex;
@@ -236,32 +198,9 @@ header #config > ul {
     min-width: 13rem;
     padding: 0.8rem;
     background-color: var(--cor-fundo-tema);
-=======
-nav #config > ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    flex-direction: column;
-    width: max-content;
-    padding: 0.41rem 0;
->>>>>>> 56e5115dd27b61f0c9ccd877fdc633142759cdfd
     border-radius: 1rem;
     background-color: var(--cor-fundo-tema);
     box-shadow: 0 0.21rem 0.4rem rgba(0, 0, 0, 0.15);
-<<<<<<< HEAD
-=======
-}
-
-nav #config:hover ul,
-nav #config:focus-within ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    width: 13rem;
->>>>>>> 56e5115dd27b61f0c9ccd877fdc633142759cdfd
 }
 
 header #config ul #tema {
@@ -277,17 +216,11 @@ header #config ul #tema {
     cursor: pointer;
 }
 
-<<<<<<< HEAD
 header #config ul #tema:hover {
     background-color: var(--pill-fundo);
 }
 
 /* CONTEÚDO PRINCIPAL */
-=======
-/* =========================================================
-   LAYOUT
-   ========================================================= */
->>>>>>> 56e5115dd27b61f0c9ccd877fdc633142759cdfd
 main {
     display: flex;
     justify-content: center;
@@ -331,7 +264,6 @@ main#coluna {
     transform: scale(1.15);
 }
 
-<<<<<<< HEAD
 /* PÁGINA DE INÍCIO */
 main.inicio {
     display: block;
@@ -446,9 +378,6 @@ main div.divisor {
 }
 
 main p {
-=======
-.container-padrao p {
->>>>>>> 56e5115dd27b61f0c9ccd877fdc633142759cdfd
     max-width: 30rem;
     line-height: 1.5;
 }

@@ -17,12 +17,18 @@ converto e organizo.
 
 | Celular do site | Arquivo | Modelo sugerido no Sketchfab | Autor | Licença | Faces |
 | --- | --- | --- | --- | --- | --- |
-| Samsung Galaxy S25 Ultra | `s25-ultra.glb` | [SAMSUNG Galaxy S25 Ultra](https://sketchfab.com/models/e3bca75b63c841c0a8aee8733b84a8a9) | zhe_kan | CC BY-NC-SA | 64.636 |
+| Samsung Galaxy S25 Ultra | `s25-ultra.glb` | [Samsung Galaxy S25 Ultra](https://sketchfab.com/3d-models/samsung-galaxy-s25-ultra-24dc6725f97f4590a6309e9a48129ff2) | mistjs | CC BY | ~12.000 |
 | Apple iPhone 17 Pro Max | `iphone-17-pro-max.glb` | [iPhone 17 Pro Max](https://sketchfab.com/models/87fc1df741384124a8ce0226d2b2058d) | MajdyModels | CC BY | 29.562 |
 | Apple iPhone 17 Pro | `iphone-17-pro.glb` | [iPhone 17 Pro](https://sketchfab.com/models/4541aa8a28324b33a2baaf81d263aaec) | Ranguel | CC BY | 51.235 |
-| Xiaomi 15 Ultra | `xiaomi-15-ultra.glb` | [(Free) Xiaomi 17 pro max](https://sketchfab.com/models/014f9880c8764d18b3f4f00aac165a5d) _(não existe 15 Ultra)_ | TahmidTauz | CC BY | 36.122 |
-| Google Pixel 9 Pro XL | `pixel-9-pro-xl.glb` | [Google Pixel 8 Pro (low-poly)](https://sketchfab.com/models/9214c34d4a1b46538f0696492e4ac246) _(não existe 9 Pro XL)_ | LagzDesign | CC BY | 9.446 |
-| Motorola Edge 50 Ultra | `edge-50-ultra.glb` | [Motorola Edge 50 Neo](https://sketchfab.com/models/45818636f9194abda61c3fc6d32a6e09) _(mesma família)_ | andras.daradici | CC BY | 6.110 |
+| Apple iPhone 12 Pro | `iphone-12-pro.glb` | [iPhone 12 Pro](https://sketchfab.com/tags/iphone-12-pro) | Sketchfab | CC BY | ~12.000 |
+| Nothing Phone (2) | `nothing-phone-2.glb` | [Nothing Phone (2)](https://sketchfab.com/tags/nothing-phone-2) | Sketchfab | CC BY | ~3.000 |
+| OnePlus 12 | `oneplus-12.glb` | [OnePlus 12](https://sketchfab.com/tags/oneplus-12) | Sketchfab | CC BY | ~8.000 |
+
+## Modelos removidos (com defeito / substitutos de baixa qualidade)
+
+- **Xiaomi 15 Ultra** (`xiaomi-15-ultra.glb`): quase vazio, apenas 4 peças, casca fina sem geometria.
+- **Google Pixel 9 Pro XL** (`pixel-9-pro-xl.glb`): low-poly com câmera traseira quebrada.
+- **Motorola Edge 50 Ultra** (`edge-50-ultra.glb`): na verdade é um Edge 50 Neo com apenas 6 mil faces.
 
 ## Alternativa para a Samsung (sem restrição comercial)
 

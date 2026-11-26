@@ -32,12 +32,12 @@ const comparacoesRapidas = [
     ids: ['s25-ultra', 'iphone-17-pro-max'],
   },
   {
-    rotulo: 'iPhone 17 Pro vs Xiaomi 15 Ultra',
-    ids: ['iphone-17-pro', 'xiaomi-15-ultra'],
+    rotulo: 'iPhone 17 Pro vs iPhone 12 Pro',
+    ids: ['iphone-17-pro', 'iphone-12-pro'],
   },
   {
-    rotulo: 'Pixel 9 Pro XL vs Edge 50 Ultra',
-    ids: ['pixel-9-pro-xl', 'edge-50-ultra'],
+    rotulo: 'Nothing Phone (2) vs OnePlus 12',
+    ids: ['nothing-phone-2', 'oneplus-12'],
   },
 ];
 
